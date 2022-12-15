@@ -6,9 +6,9 @@ package server
 import (
 	"context"
 
-	"meowchat-notice-rpc/internal/logic"
-	"meowchat-notice-rpc/internal/svc"
-	"meowchat-notice-rpc/pb"
+	"github.com/xh-polaris/meowchat-notice-rpc/internal/logic"
+	"github.com/xh-polaris/meowchat-notice-rpc/internal/svc"
+	"github.com/xh-polaris/meowchat-notice-rpc/pb"
 )
 
 type NoticeRpcServer struct {

@@ -1,4 +1,4 @@
-module meowchat-notice-rpc
+module github.com/xh-polaris/meowchat-notice-rpc
 
 go 1.18
 

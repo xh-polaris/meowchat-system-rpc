@@ -4,10 +4,10 @@ import (
 	"flag"
 	"fmt"
 
-	"meowchat-notice-rpc/internal/config"
-	"meowchat-notice-rpc/internal/server"
-	"meowchat-notice-rpc/internal/svc"
-	"meowchat-notice-rpc/pb"
+	"github.com/xh-polaris/meowchat-notice-rpc/internal/config"
+	"github.com/xh-polaris/meowchat-notice-rpc/internal/server"
+	"github.com/xh-polaris/meowchat-notice-rpc/internal/svc"
+	"github.com/xh-polaris/meowchat-notice-rpc/pb"
 
 	"github.com/zeromicro/go-zero/core/conf"
 	"github.com/zeromicro/go-zero/core/service"

@@ -6,7 +6,7 @@ package noticerpc
 import (
 	"context"
 
-	"meowchat-notice-rpc/pb"
+	"github.com/xh-polaris/meowchat-notice-rpc/pb"
 
 	"github.com/zeromicro/go-zero/zrpc"
 	"google.golang.org/grpc"

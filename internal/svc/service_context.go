@@ -1,9 +1,9 @@
 package svc
 
 import (
+	"github.com/xh-polaris/meowchat-notice-rpc/internal/config"
+	"github.com/xh-polaris/meowchat-notice-rpc/internal/model"
 	"github.com/zeromicro/go-zero/core/stores/redis"
-	"meowchat-notice-rpc/internal/config"
-	"meowchat-notice-rpc/internal/model"
 )
 
 type ServiceContext struct {

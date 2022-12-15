@@ -2,10 +2,10 @@ package logic
 
 import (
 	"context"
-	"meowchat-notice-rpc/errorx"
+	"github.com/xh-polaris/meowchat-notice-rpc/errorx"
 
-	"meowchat-notice-rpc/internal/svc"
-	"meowchat-notice-rpc/pb"
+	"github.com/xh-polaris/meowchat-notice-rpc/internal/svc"
+	"github.com/xh-polaris/meowchat-notice-rpc/pb"
 
 	"github.com/zeromicro/go-zero/core/logx"
 )

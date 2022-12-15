@@ -1,8 +1,8 @@
 package errorx
 
 import (
+	"github.com/xh-polaris/meowchat-notice-rpc/internal/model"
 	"google.golang.org/grpc/status"
-	"meowchat-notice-rpc/internal/model"
 )
 
 var (

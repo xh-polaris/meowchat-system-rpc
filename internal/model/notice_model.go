@@ -2,11 +2,11 @@ package model
 
 import (
 	"context"
+	"github.com/xh-polaris/meowchat-notice-rpc/pb"
 	"github.com/zeromicro/go-zero/core/stores/cache"
 	"github.com/zeromicro/go-zero/core/stores/monc"
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/bson/primitive"
-	"meowchat-notice-rpc/pb"
 )
 
 const NoticeCollectionName = "notice"

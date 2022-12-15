@@ -2,12 +2,12 @@ package logic
 
 import (
 	"context"
+	"github.com/xh-polaris/meowchat-notice-rpc/internal/model"
 	"go.mongodb.org/mongo-driver/bson/primitive"
-	"meowchat-notice-rpc/internal/model"
 	"time"
 
-	"meowchat-notice-rpc/internal/svc"
-	"meowchat-notice-rpc/pb"
+	"github.com/xh-polaris/meowchat-notice-rpc/internal/svc"
+	"github.com/xh-polaris/meowchat-notice-rpc/pb"
 
 	"github.com/zeromicro/go-zero/core/logx"
 )
