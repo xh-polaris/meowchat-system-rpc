@@ -1,0 +1,208 @@
+syntax = "proto3";
+
+package notice;
+
+option go_package = './pb';
+
+// ////////////////////////
+// /         公告         /
+// ////////////////////////
+
+message Notice {
+  string id = 1;
+  string communityId = 2;
+  string text = 3;
+  int64 createAt = 4;
+  int64 updateAt = 5;
+}
+
+message RetrieveNoticeReq {
+  string id = 1;
+}
+
+message RetrieveNoticeResp {
+  Notice notice = 1;
+}
+
+message ListNoticeReq {
+  string communityId = 1;
+}
+
+message ListNoticeResp {
+  repeated Notice notices = 1;
+}
+
+message CreateNoticeReq {
+  string communityId = 1;
+  string text = 2;
+}
+
+message CreateNoticeResp {
+  string id = 1;
+}
+
+message UpdateNoticeReq {
+  string id = 1;
+  string text = 2;
+}
+
+message UpdateNoticeResp {
+
+}
+
+message DeleteNoticeReq {
+  string id = 1;
+}
+
+message DeleteNoticeResp {
+
+}
+
+// ////////////////////////
+// /        轮播图         /
+// ////////////////////////
+
+message News {
+  string id = 1;
+  string communityId = 2;
+  string imageUrl = 3;
+  string linkUrl = 4;
+  string type = 5;
+}
+
+message RetrieveNewsReq {
+  string id = 1;
+}
+
+message RetrieveNewsResp {
+  News news = 1;
+}
+
+message ListNewsReq {
+  string communityId = 1;
+}
+
+message ListNewsResp {
+  repeated News news = 1;
+}
+
+message CreateNewsReq {
+  string communityId = 1;
+  string imageUrl = 2;
+  string linkUrl = 3;
+  string type = 4;
+}
+
+message CreateNewsResp {
+  string id = 1;
+}
+
+message UpdateNewsReq {
+  string id = 1;
+  string imageUrl = 2;
+  string linkUrl = 3;
+  string type = 4;
+}
+
+message UpdateNewsResp {
+
+}
+
+message DeleteNewsReq {
+  string id = 1;
+}
+
+message DeleteNewsResp {
+
+}
+
+// ////////////////////////
+// /        管理员         /
+// ////////////////////////
+
+message Admin {
+  string id = 1;
+  string communityId = 2;
+  string name = 3;
+  string title = 4;
+  string phone = 5;
+  string wechat = 6;
+  string avatarUrl = 7;
+}
+
+message RetrieveAdminReq {
+  string id = 1;
+}
+
+message RetrieveAdminResp {
+  Admin admin = 1;
+}
+
+message ListAdminReq {
+  string communityId = 1;
+}
+
+message ListAdminResp {
+  repeated Admin admins = 1;
+}
+
+message CreateAdminReq {
+  string communityId = 1;
+  string name = 2;
+  string title = 3;
+  string phone = 4;
+  string wechat = 5;
+  string avatarUrl = 6;
+}
+
+message CreateAdminResp {
+  string id = 1;
+}
+
+message UpdateAdminReq {
+  string id = 1;
+  string communityId = 2;
+  string name = 3;
+  string title = 4;
+  string phone = 5;
+  string wechat = 6;
+  string avatarUrl = 7;
+}
+
+message UpdateAdminResp {
+
+}
+
+message DeleteAdminReq {
+  string id = 1;
+}
+
+message DeleteAdminResp {
+
+}
+
+service notice_rpc {
+  // 公告
+
+  rpc RetrieveNotice(RetrieveNoticeReq) returns (RetrieveNoticeResp);
+  rpc ListNotice(ListNoticeReq) returns (ListNoticeResp);
+  rpc CreateNotice(CreateNoticeReq) returns (CreateNoticeResp);
+  rpc UpdateNotice(UpdateNoticeReq) returns (UpdateNoticeResp);
+  rpc DeleteNotice(DeleteNoticeReq) returns (DeleteNoticeResp);
+
+  // 轮播图
+
+  rpc RetrieveNews(RetrieveNewsReq) returns (RetrieveNewsResp);
+  rpc ListNews(ListNewsReq) returns (ListNewsResp);
+  rpc CreateNews(CreateNewsReq) returns (CreateNewsResp);
+  rpc UpdateNews(UpdateNewsReq) returns (UpdateNewsResp);
+  rpc DeleteNews(DeleteNewsReq) returns (DeleteNewsResp);
+
+  // 管理员
+
+  rpc RetrieveAdmin(RetrieveAdminReq) returns (RetrieveAdminResp);
+  rpc ListAdmin(ListAdminReq) returns (ListAdminResp);
+  rpc CreateAdmin(CreateAdminReq) returns (CreateAdminResp);
+  rpc UpdateAdmin(UpdateAdminReq) returns (UpdateAdminResp);
+  rpc DeleteAdmin(DeleteAdminReq) returns (DeleteAdminResp);
+}
