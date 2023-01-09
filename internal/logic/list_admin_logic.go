@@ -24,7 +24,7 @@ func NewListAdminLogic(ctx context.Context, svcCtx *svc.ServiceContext) *ListAdm
 }
 
 func (l *ListAdminLogic) ListAdmin(in *pb.ListAdminReq) (*pb.ListAdminResp, error) {
-	admins, err := l.svcCtx.AdminModel.ListAdmin(l.ctx, in)
+	admins, count, err := l.svcCtx.AdminModel.ListAdmin(l.ctx, in)
 	if err != nil {
 		return nil, err
 	}
@@ -44,5 +44,6 @@ func (l *ListAdminLogic) ListAdmin(in *pb.ListAdminReq) (*pb.ListAdminResp, erro
 
 	return &pb.ListAdminResp{
 		Admins: resp,
+		Count:  count,
 	}, nil
 }

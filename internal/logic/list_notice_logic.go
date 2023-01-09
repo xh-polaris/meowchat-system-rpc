@@ -24,7 +24,7 @@ func NewListNoticeLogic(ctx context.Context, svcCtx *svc.ServiceContext) *ListNo
 }
 
 func (l *ListNoticeLogic) ListNotice(in *pb.ListNoticeReq) (*pb.ListNoticeResp, error) {
-	notices, err := l.svcCtx.NoticeModel.ListNotice(l.ctx, in)
+	notices, count, err := l.svcCtx.NoticeModel.ListNotice(l.ctx, in)
 	if err != nil {
 		return nil, err
 	}
@@ -42,5 +42,6 @@ func (l *ListNoticeLogic) ListNotice(in *pb.ListNoticeReq) (*pb.ListNoticeResp, 
 
 	return &pb.ListNoticeResp{
 		Notices: resp,
+		Count:   count,
 	}, nil
 }

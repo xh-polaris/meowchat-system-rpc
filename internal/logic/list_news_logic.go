@@ -24,7 +24,7 @@ func NewListNewsLogic(ctx context.Context, svcCtx *svc.ServiceContext) *ListNews
 }
 
 func (l *ListNewsLogic) ListNews(in *pb.ListNewsReq) (*pb.ListNewsResp, error) {
-	news, err := l.svcCtx.NewsModel.ListNews(l.ctx, in)
+	news, count, err := l.svcCtx.NewsModel.ListNews(l.ctx, in)
 	if err != nil {
 		return nil, err
 	}
@@ -41,6 +41,7 @@ func (l *ListNewsLogic) ListNews(in *pb.ListNewsReq) (*pb.ListNewsResp, error) {
 	}
 
 	return &pb.ListNewsResp{
-		News: resp,
+		News:  resp,
+		Count: count,
 	}, nil
 }
