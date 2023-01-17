@@ -7,5 +7,5 @@
 **Start services**
 
 ```bash
-go run notice.go -f etc/notice.yaml
+go run notice.go -f etc/system.yaml
 ```

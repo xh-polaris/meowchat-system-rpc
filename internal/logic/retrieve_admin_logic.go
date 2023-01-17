@@ -2,9 +2,9 @@ package logic
 
 import (
 	"context"
-	"github.com/xh-polaris/meowchat-notice-rpc/errorx"
-	"github.com/xh-polaris/meowchat-notice-rpc/internal/svc"
-	"github.com/xh-polaris/meowchat-notice-rpc/pb"
+	"github.com/xh-polaris/meowchat-system-rpc/errorx"
+	"github.com/xh-polaris/meowchat-system-rpc/internal/svc"
+	"github.com/xh-polaris/meowchat-system-rpc/pb"
 
 	"github.com/zeromicro/go-zero/core/logx"
 )
@@ -30,14 +30,6 @@ func (l *RetrieveAdminLogic) RetrieveAdmin(in *pb.RetrieveAdminReq) (*pb.Retriev
 	}
 
 	return &pb.RetrieveAdminResp{
-		Admin: &pb.Admin{
-			Id:          admin.ID.Hex(),
-			CommunityId: admin.CommunityId,
-			Name:        admin.Name,
-			Title:       admin.Title,
-			Phone:       admin.Phone,
-			Wechat:      admin.Wechat,
-			AvatarUrl:   admin.AvatarUrl,
-		},
+		Admin: svc.ConvertAdmin(admin),
 	}, nil
 }

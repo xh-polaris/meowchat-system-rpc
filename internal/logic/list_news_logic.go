@@ -2,9 +2,8 @@ package logic
 
 import (
 	"context"
-
-	"github.com/xh-polaris/meowchat-notice-rpc/internal/svc"
-	"github.com/xh-polaris/meowchat-notice-rpc/pb"
+	"github.com/xh-polaris/meowchat-system-rpc/internal/svc"
+	"github.com/xh-polaris/meowchat-system-rpc/pb"
 
 	"github.com/zeromicro/go-zero/core/logx"
 )
@@ -31,13 +30,7 @@ func (l *ListNewsLogic) ListNews(in *pb.ListNewsReq) (*pb.ListNewsResp, error) {
 
 	var resp = make([]*pb.News, len(news))
 	for i, n := range news {
-		resp[i] = &pb.News{
-			Id:          n.ID.Hex(),
-			CommunityId: n.CommunityId,
-			ImageUrl:    n.ImageUrl,
-			LinkUrl:     n.LinkUrl,
-			Type:        n.Type,
-		}
+		resp[i] = svc.ConvertNews(n)
 	}
 
 	return &pb.ListNewsResp{

@@ -2,8 +2,7 @@ package model
 
 import (
 	"context"
-	"github.com/xh-polaris/meowchat-notice-rpc/pb"
-	"github.com/zeromicro/go-zero/core/mathx"
+	"github.com/xh-polaris/meowchat-system-rpc/pb"
 	"github.com/zeromicro/go-zero/core/stores/cache"
 	"github.com/zeromicro/go-zero/core/stores/monc"
 	"go.mongodb.org/mongo-driver/bson"
@@ -32,24 +31,11 @@ type (
 
 func (m customNewsModel) ListNews(ctx context.Context, req *pb.ListNewsReq) ([]*News, int64, error) {
 	var resp []*News
-	page, size := mathx.MaxInt(1, int(req.Page)), req.Size
 
 	filter := bson.M{
 		"communityId": req.CommunityId,
 	}
-	findOptions := new(options.FindOptions)
-	if size > 0 {
-		findOptions.SetLimit(size)
-		findOptions.SetSkip(int64(page-1) * size)
-	}
-	sortMap := req.Sort
-	if len(sortMap) > 0 {
-		sort := bson.D{}
-		for k, v := range sortMap {
-			sort = append(sort, bson.E{Key: k, Value: v})
-		}
-		findOptions.SetSort(sort)
-	}
+	findOptions := ToFindOptions(req.Page, req.Size, req.Sort)
 
 	err := m.conn.Find(ctx, &resp, filter, findOptions)
 	if err != nil {

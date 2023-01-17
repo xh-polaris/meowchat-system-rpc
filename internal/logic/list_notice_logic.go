@@ -2,9 +2,8 @@ package logic
 
 import (
 	"context"
-
-	"github.com/xh-polaris/meowchat-notice-rpc/internal/svc"
-	"github.com/xh-polaris/meowchat-notice-rpc/pb"
+	"github.com/xh-polaris/meowchat-system-rpc/internal/svc"
+	"github.com/xh-polaris/meowchat-system-rpc/pb"
 
 	"github.com/zeromicro/go-zero/core/logx"
 )
@@ -31,13 +30,7 @@ func (l *ListNoticeLogic) ListNotice(in *pb.ListNoticeReq) (*pb.ListNoticeResp, 
 
 	var resp = make([]*pb.Notice, len(notices))
 	for i, n := range notices {
-		resp[i] = &pb.Notice{
-			Id:          n.ID.Hex(),
-			CommunityId: n.CommunityId,
-			Text:        n.Text,
-			CreateAt:    n.CreateAt.UnixMilli(),
-			UpdateAt:    n.UpdateAt.UnixMilli(),
-		}
+		resp[i] = svc.ConvertNotice(n)
 	}
 
 	return &pb.ListNoticeResp{

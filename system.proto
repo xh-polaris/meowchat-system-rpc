@@ -1,6 +1,6 @@
 syntax = "proto3";
 
-package notice;
+package system;
 
 option go_package = './pb';
 
@@ -193,7 +193,105 @@ message DeleteAdminResp {
 
 }
 
-service notice_rpc {
+// ////////////////////////
+// /       用户角色        /
+// ////////////////////////
+
+message Role {
+  string type = 1;
+  // 如果是管理员则为非空值
+  string communityId = 2;
+}
+
+message RetrieveUserRoleReq {
+  string userId = 1;
+}
+
+message RetrieveUserRoleResp {
+  repeated Role roles = 1;
+}
+
+message UpdateUserRoleReq {
+  string userId = 1;
+  // roles为用户增加/删除角色后所拥有的所有的角色
+  repeated Role roles = 2;
+}
+
+message UpdateUserRoleResp {
+
+}
+
+/*
+如果role只传入type，只会校验用户是否包含该角色，
+如果传入communityId并且type是communityAdmin，会同时校验communityId
+ */
+message ContainsRoleReq {
+  string userId = 1;
+  Role role = 2;
+}
+
+message ContainsRoleResp {
+  bool contains = 1;
+}
+
+// ////////////////////////
+// /         社区          /
+// ////////////////////////
+
+message Community {
+  string id = 1;
+  string name = 2;
+  string parentId = 3;
+}
+
+message RetrieveCommunityReq {
+  string id = 1;
+}
+
+message RetrieveCommunityResp {
+  Community community = 1;
+}
+
+message ListCommunityReq {
+  string parentId = 1;
+  int64 page = 2; // 分页的当前页，从1开始
+  int64 size = 3; // 分页的每页大小，小于1时不分页
+  map<string, int32> sort = 4; // 排序的字段，key为字段名，value为1为升序，-1为降序
+}
+
+message ListCommunityResp {
+  repeated Community communities = 1;
+  int64 count = 2;
+}
+
+message CreateCommunityReq {
+  string name = 1;
+  string parentId = 2;
+}
+
+message CreateCommunityResp {
+  string id = 1;
+}
+
+message UpdateCommunityReq {
+  string id = 1;
+  string name = 2;
+  string parentId = 3;
+}
+
+message UpdateCommunityResp {
+
+}
+
+message DeleteCommunityReq {
+  string id = 1;
+}
+
+message DeleteCommunityResp {
+
+}
+
+service system_rpc {
   // 公告
 
   rpc RetrieveNotice(RetrieveNoticeReq) returns (RetrieveNoticeResp);
@@ -217,4 +315,21 @@ service notice_rpc {
   rpc CreateAdmin(CreateAdminReq) returns (CreateAdminResp);
   rpc UpdateAdmin(UpdateAdminReq) returns (UpdateAdminResp);
   rpc DeleteAdmin(DeleteAdminReq) returns (DeleteAdminResp);
+
+  // 用户角色
+
+  // 获取用户的所有角色
+  rpc RetrieveUserRole(RetrieveUserRoleReq) returns (RetrieveUserRoleResp);
+  // 更新用户的角色
+  rpc UpdateUserRole(UpdateUserRoleReq) returns (UpdateUserRoleResp);
+  rpc ContainsRole(ContainsRoleReq) returns (ContainsRoleResp);
+
+  // 社区
+
+  rpc RetrieveCommunity(RetrieveCommunityReq) returns (RetrieveCommunityResp);
+  rpc ListCommunity(ListCommunityReq) returns (ListCommunityResp);
+  rpc CreateCommunity(CreateCommunityReq) returns (CreateCommunityResp);
+  rpc UpdateCommunity(UpdateCommunityReq) returns (UpdateCommunityResp);
+  rpc DeleteCommunity(DeleteCommunityReq) returns (DeleteCommunityResp);
+
 }

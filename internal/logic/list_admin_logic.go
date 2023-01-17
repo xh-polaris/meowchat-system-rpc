@@ -2,9 +2,8 @@ package logic
 
 import (
 	"context"
-
-	"github.com/xh-polaris/meowchat-notice-rpc/internal/svc"
-	"github.com/xh-polaris/meowchat-notice-rpc/pb"
+	"github.com/xh-polaris/meowchat-system-rpc/internal/svc"
+	"github.com/xh-polaris/meowchat-system-rpc/pb"
 
 	"github.com/zeromicro/go-zero/core/logx"
 )
@@ -31,15 +30,7 @@ func (l *ListAdminLogic) ListAdmin(in *pb.ListAdminReq) (*pb.ListAdminResp, erro
 
 	var resp = make([]*pb.Admin, len(admins))
 	for i, admin := range admins {
-		resp[i] = &pb.Admin{
-			Id:          admin.ID.Hex(),
-			CommunityId: admin.CommunityId,
-			Name:        admin.Name,
-			Title:       admin.Title,
-			Phone:       admin.Phone,
-			Wechat:      admin.Wechat,
-			AvatarUrl:   admin.AvatarUrl,
-		}
+		resp[i] = svc.ConvertAdmin(admin)
 	}
 
 	return &pb.ListAdminResp{
