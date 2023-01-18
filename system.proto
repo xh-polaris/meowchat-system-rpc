@@ -228,6 +228,8 @@ message UpdateUserRoleResp {
 message ContainsRoleReq {
   string userId = 1;
   Role role = 2;
+  // 是否允许超级管理员，如果为true并且用户为超级管理员则不校验role
+  bool allowSuperAdmin = 3;
 }
 
 message ContainsRoleResp {

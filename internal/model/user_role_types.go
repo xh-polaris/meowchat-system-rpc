@@ -6,12 +6,6 @@ import (
 	"go.mongodb.org/mongo-driver/bson/primitive"
 )
 
-const (
-	RoleUser           = "user"
-	RoleCommunityAdmin = "communityAdmin"
-	RoleSuperAdmin     = "superAdmin"
-)
-
 type Role struct {
 	Type        string `bson:"type,omitempty" json:"type,omitempty"`
 	CommunityId string `bson:"communityId,omitempty" json:"communityId,omitempty"`

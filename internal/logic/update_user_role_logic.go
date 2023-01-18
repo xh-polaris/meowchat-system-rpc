@@ -2,6 +2,7 @@ package logic
 
 import (
 	"context"
+	"github.com/xh-polaris/meowchat-system-rpc/constant"
 	"github.com/xh-polaris/meowchat-system-rpc/errorx"
 	"github.com/xh-polaris/meowchat-system-rpc/internal/model"
 	"github.com/xh-polaris/meowchat-system-rpc/internal/svc"
@@ -34,7 +35,7 @@ func (l *UpdateUserRoleLogic) UpdateUserRole(in *pb.UpdateUserRoleReq) (*pb.Upda
 
 	roles := make([]model.Role, len(in.Roles))
 	for i, role := range in.Roles {
-		if role.Type == model.RoleCommunityAdmin {
+		if role.Type == constant.RoleCommunityAdmin {
 			id, _ := l.svcCtx.CheckCommunityIdExist(l.ctx, role.CommunityId)
 			if id == primitive.NilObjectID {
 				return nil, errorx.ErrCommunityIdNotFound

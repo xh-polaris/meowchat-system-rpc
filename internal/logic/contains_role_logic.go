@@ -2,8 +2,7 @@ package logic
 
 import (
 	"context"
-	"github.com/xh-polaris/meowchat-system-rpc/internal/model"
-
+	"github.com/xh-polaris/meowchat-system-rpc/constant"
 	"github.com/xh-polaris/meowchat-system-rpc/internal/svc"
 	"github.com/xh-polaris/meowchat-system-rpc/pb"
 
@@ -24,22 +23,45 @@ func NewContainsRoleLogic(ctx context.Context, svcCtx *svc.ServiceContext) *Cont
 	}
 }
 
-func (l *ContainsRoleLogic) ContainsRole(in *pb.ContainsRoleReq) (*pb.ContainsRoleResp, error) {
+// 判断cid1的社区是不是cid2的社区的子社区
+func (l *ContainsRoleLogic) subCommunityOf(cid1, cid2 string) bool {
+	if cid1 == cid2 {
+		return true
+	}
+	c1, _ := l.svcCtx.CommunityModel.FindOne(l.ctx, cid1)
+	return c1 != nil && c1.ParentId.Hex() == cid2
+}
+
+func (l *ContainsRoleLogic) ContainsRole(in *pb.ContainsRoleReq) (resp *pb.ContainsRoleResp, err error) {
+	resp = &pb.ContainsRoleResp{}
+
 	userRole, _ := l.svcCtx.UserRoleModel.FindOne(l.ctx, in.UserId)
-	if userRole != nil {
-		for _, role := range userRole.Roles {
-			if role.Type == in.Role.Type {
-				return &pb.ContainsRoleResp{
-					Contains: in.Role.Type != model.RoleCommunityAdmin ||
-						// 是CommunityAdmin 并且校验CommunityId的情况
-						in.Role.CommunityId == "" ||
-						role.CommunityId == in.Role.CommunityId,
-				}, nil
+	if userRole == nil {
+		return
+	}
+
+	for _, role := range userRole.Roles {
+		switch role.Type {
+		case constant.RoleSuperAdmin:
+			if in.Role.Type == constant.RoleSuperAdmin || in.AllowSuperAdmin {
+				resp.Contains = true
+				return
+			}
+			break
+		case constant.RoleCommunityAdmin:
+			if in.Role.Type == constant.RoleCommunityAdmin &&
+				(in.Role.CommunityId == "" || l.subCommunityOf(in.Role.CommunityId, role.CommunityId)) {
+				resp.Contains = true
+				return
+			}
+			break
+		default:
+			if in.Role.Type == role.Type {
+				resp.Contains = true
+				return
 			}
 		}
 	}
 
-	return &pb.ContainsRoleResp{
-		Contains: false,
-	}, nil
+	return
 }
