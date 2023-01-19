@@ -35,6 +35,10 @@ func (l *ContainsRoleLogic) subCommunityOf(cid1, cid2 string) bool {
 func (l *ContainsRoleLogic) ContainsRole(in *pb.ContainsRoleReq) (resp *pb.ContainsRoleResp, err error) {
 	resp = &pb.ContainsRoleResp{}
 
+	if in.Role == nil {
+		in.Role = &pb.Role{}
+	}
+
 	userRole, _ := l.svcCtx.UserRoleModel.FindOne(l.ctx, in.UserId)
 	if userRole == nil {
 		return
@@ -43,7 +47,7 @@ func (l *ContainsRoleLogic) ContainsRole(in *pb.ContainsRoleReq) (resp *pb.Conta
 	for _, role := range userRole.Roles {
 		switch role.Type {
 		case constant.RoleSuperAdmin:
-			if in.Role.Type == constant.RoleSuperAdmin || in.AllowSuperAdmin {
+			if in.AllowSuperAdmin || in.Role.Type == constant.RoleSuperAdmin {
 				resp.Contains = true
 				return
 			}

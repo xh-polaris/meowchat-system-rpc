@@ -11,23 +11,23 @@ import (
 
 const CommunityCollectionName = "community"
 
-var _ CommunityModel = (*customCommunityModel)(nil)
+var _ CommunityModel = (*CustomCommunityModel)(nil)
 
 type (
 	// CommunityModel is an interface to be customized, add more methods here,
-	// and implement the added methods in customCommunityModel.
+	// and implement the added methods in CustomCommunityModel.
 	CommunityModel interface {
 		communityModel
 		ListCommunity(ctx context.Context, req *pb.ListCommunityReq) ([]*Community, int64, error)
 		DeleteCommunity(ctx context.Context, id string) error
 	}
 
-	customCommunityModel struct {
+	CustomCommunityModel struct {
 		*defaultCommunityModel
 	}
 )
 
-func (c customCommunityModel) DeleteCommunity(ctx context.Context, id string) error {
+func (c CustomCommunityModel) DeleteCommunity(ctx context.Context, id string) error {
 	key := prefixCommunityCacheKey + id
 
 	old := new(Community)
@@ -56,7 +56,7 @@ func (c customCommunityModel) DeleteCommunity(ctx context.Context, id string) er
 	return nil
 }
 
-func (c customCommunityModel) ListCommunity(ctx context.Context, req *pb.ListCommunityReq) ([]*Community, int64, error) {
+func (c CustomCommunityModel) ListCommunity(ctx context.Context, req *pb.ListCommunityReq) ([]*Community, int64, error) {
 	var resp []*Community
 
 	filter := bson.M{}
@@ -85,7 +85,7 @@ func (c customCommunityModel) ListCommunity(ctx context.Context, req *pb.ListCom
 // NewCommunityModel returns a model for the mongo.
 func NewCommunityModel(url, db, collection string, c cache.CacheConf) CommunityModel {
 	conn := monc.MustNewModel(url, db, collection, c)
-	return &customCommunityModel{
+	return &CustomCommunityModel{
 		defaultCommunityModel: newDefaultCommunityModel(conn),
 	}
 }

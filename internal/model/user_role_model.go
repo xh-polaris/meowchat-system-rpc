@@ -12,22 +12,22 @@ import (
 
 const UserRoleCollectionName = "user_role"
 
-var _ UserRoleModel = (*customUserRoleModel)(nil)
+var _ UserRoleModel = (*CustomUserRoleModel)(nil)
 
 type (
 	// UserRoleModel is an interface to be customized, add more methods here,
-	// and implement the added methods in customUserRoleModel.
+	// and implement the added methods in CustomUserRoleModel.
 	UserRoleModel interface {
 		userRoleModel
 		Upsert(ctx context.Context, data *UserRole) (*mongo.UpdateResult, error)
 	}
 
-	customUserRoleModel struct {
+	CustomUserRoleModel struct {
 		*defaultUserRoleModel
 	}
 )
 
-func (m customUserRoleModel) Upsert(ctx context.Context, data *UserRole) (*mongo.UpdateResult, error) {
+func (m CustomUserRoleModel) Upsert(ctx context.Context, data *UserRole) (*mongo.UpdateResult, error) {
 	data.UpdateAt = time.Now()
 	key := prefixUserRoleCacheKey + data.ID.Hex()
 	res, err := m.conn.UpdateOne(ctx, key,
@@ -42,7 +42,7 @@ func (m customUserRoleModel) Upsert(ctx context.Context, data *UserRole) (*mongo
 // NewUserRoleModel returns a model for the mongo.
 func NewUserRoleModel(url, db, collection string, c cache.CacheConf) UserRoleModel {
 	conn := monc.MustNewModel(url, db, collection, c)
-	return &customUserRoleModel{
+	return &CustomUserRoleModel{
 		defaultUserRoleModel: newDefaultUserRoleModel(conn),
 	}
 }
