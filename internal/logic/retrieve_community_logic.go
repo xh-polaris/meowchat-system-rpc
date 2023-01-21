@@ -9,27 +9,28 @@ import (
 	"github.com/zeromicro/go-zero/core/logx"
 )
 
-type RetrieveNoticeLogic struct {
+type RetrieveCommunityLogic struct {
 	ctx    context.Context
 	svcCtx *svc.ServiceContext
 	logx.Logger
 }
 
-func NewRetrieveNoticeLogic(ctx context.Context, svcCtx *svc.ServiceContext) *RetrieveNoticeLogic {
-	return &RetrieveNoticeLogic{
+func NewRetrieveCommunityLogic(ctx context.Context, svcCtx *svc.ServiceContext) *RetrieveCommunityLogic {
+	return &RetrieveCommunityLogic{
 		ctx:    ctx,
 		svcCtx: svcCtx,
 		Logger: logx.WithContext(ctx),
 	}
 }
 
-func (l *RetrieveNoticeLogic) RetrieveNotice(in *pb.RetrieveNoticeReq) (*pb.RetrieveNoticeResp, error) {
-	notice, err := l.svcCtx.NoticeModel.FindOne(l.ctx, in.Id)
+func (l *RetrieveCommunityLogic) RetrieveCommunity(in *pb.RetrieveCommunityReq) (*pb.RetrieveCommunityResp, error) {
+	community, err := l.svcCtx.CommunityModel.FindOne(l.ctx, in.Id)
+
 	if err != nil {
 		return nil, errorx.Switch(err)
 	}
 
-	return &pb.RetrieveNoticeResp{
-		Notice: svc.ConvertNotice(notice),
+	return &pb.RetrieveCommunityResp{
+		Community: svc.ConvertCommunity(community),
 	}, nil
 }

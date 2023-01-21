@@ -2,9 +2,9 @@ package logic
 
 import (
 	"context"
-	"github.com/xh-polaris/meowchat-notice-rpc/errorx"
-	"github.com/xh-polaris/meowchat-notice-rpc/internal/svc"
-	"github.com/xh-polaris/meowchat-notice-rpc/pb"
+	"github.com/xh-polaris/meowchat-system-rpc/errorx"
+	"github.com/xh-polaris/meowchat-system-rpc/internal/svc"
+	"github.com/xh-polaris/meowchat-system-rpc/pb"
 
 	"github.com/zeromicro/go-zero/core/logx"
 )
@@ -30,12 +30,6 @@ func (l *RetrieveNewsLogic) RetrieveNews(in *pb.RetrieveNewsReq) (*pb.RetrieveNe
 	}
 
 	return &pb.RetrieveNewsResp{
-		News: &pb.News{
-			Id:          news.ID.Hex(),
-			CommunityId: news.CommunityId,
-			ImageUrl:    news.ImageUrl,
-			LinkUrl:     news.LinkUrl,
-			Type:        news.Type,
-		},
+		News: svc.ConvertNews(news),
 	}, nil
 }

@@ -2,7 +2,7 @@ package model
 
 import (
 	"context"
-	"github.com/xh-polaris/meowchat-notice-rpc/pb"
+	"github.com/xh-polaris/meowchat-system-rpc/pb"
 	"github.com/zeromicro/go-zero/core/stores/cache"
 	"github.com/zeromicro/go-zero/core/stores/monc"
 	"go.mongodb.org/mongo-driver/bson"
@@ -18,7 +18,7 @@ type (
 	// and implement the added methods in customNoticeModel.
 	NoticeModel interface {
 		noticeModel
-		ListNotice(ctx context.Context, query *pb.ListNoticeReq) ([]*Notice, error)
+		ListNotice(ctx context.Context, req *pb.ListNoticeReq) ([]*Notice, int64, error)
 		UpdateNotice(ctx context.Context, req *pb.UpdateNoticeReq) error
 	}
 
@@ -48,18 +48,25 @@ func (m customNoticeModel) UpdateNotice(ctx context.Context, req *pb.UpdateNotic
 	return err
 }
 
-func (m customNoticeModel) ListNotice(ctx context.Context, query *pb.ListNoticeReq) ([]*Notice, error) {
+func (m customNoticeModel) ListNotice(ctx context.Context, req *pb.ListNoticeReq) ([]*Notice, int64, error) {
 	var resp []*Notice
 
 	filter := bson.M{
-		"communityId": query.CommunityId,
+		"communityId": req.CommunityId,
+	}
+	findOptions := ToFindOptions(req.Page, req.Size, req.Sort)
+
+	err := m.conn.Find(ctx, &resp, filter, findOptions)
+	if err != nil {
+		return nil, 0, err
 	}
 
-	err := m.conn.Find(ctx, &resp, filter)
+	count, err := m.conn.CountDocuments(ctx, filter)
 	if err != nil {
-		return nil, err
+		return nil, 0, err
 	}
-	return resp, nil
+
+	return resp, count, nil
 }
 
 // NewNoticeModel returns a noticemodel for the mongo.

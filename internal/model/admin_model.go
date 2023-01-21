@@ -2,7 +2,7 @@ package model
 
 import (
 	"context"
-	"github.com/xh-polaris/meowchat-notice-rpc/pb"
+	"github.com/xh-polaris/meowchat-system-rpc/pb"
 	"github.com/zeromicro/go-zero/core/stores/cache"
 	"github.com/zeromicro/go-zero/core/stores/monc"
 	"go.mongodb.org/mongo-driver/bson"
@@ -19,7 +19,7 @@ type (
 	// and implement the added methods in customAdminModel.
 	AdminModel interface {
 		adminModel
-		ListAdmin(ctx context.Context, query *pb.ListAdminReq) ([]*Admin, error)
+		ListAdmin(ctx context.Context, query *pb.ListAdminReq) ([]*Admin, int64, error)
 		UpdateAdmin(ctx context.Context, req *pb.UpdateAdminReq) error
 	}
 
@@ -60,18 +60,25 @@ func (m customAdminModel) UpdateAdmin(ctx context.Context, req *pb.UpdateAdminRe
 	return err
 }
 
-func (m customAdminModel) ListAdmin(ctx context.Context, req *pb.ListAdminReq) ([]*Admin, error) {
+func (m customAdminModel) ListAdmin(ctx context.Context, req *pb.ListAdminReq) ([]*Admin, int64, error) {
 	var resp []*Admin
 
 	filter := bson.M{
 		"communityId": req.CommunityId,
 	}
+	findOptions := ToFindOptions(req.Page, req.Size, req.Sort)
 
-	err := m.conn.Find(ctx, &resp, filter)
+	err := m.conn.Find(ctx, &resp, filter, findOptions)
 	if err != nil {
-		return nil, err
+		return nil, 0, err
 	}
-	return resp, nil
+
+	count, err := m.conn.CountDocuments(ctx, filter)
+	if err != nil {
+		return nil, 0, err
+	}
+
+	return resp, count, nil
 }
 
 // NewAdminModel returns a newsmodel for the mongo.

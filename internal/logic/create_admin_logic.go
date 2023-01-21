@@ -2,12 +2,12 @@ package logic
 
 import (
 	"context"
-	"github.com/xh-polaris/meowchat-notice-rpc/internal/model"
+	"github.com/xh-polaris/meowchat-system-rpc/internal/model"
 	"go.mongodb.org/mongo-driver/bson/primitive"
 	"time"
 
-	"github.com/xh-polaris/meowchat-notice-rpc/internal/svc"
-	"github.com/xh-polaris/meowchat-notice-rpc/pb"
+	"github.com/xh-polaris/meowchat-system-rpc/internal/svc"
+	"github.com/xh-polaris/meowchat-system-rpc/pb"
 
 	"github.com/zeromicro/go-zero/core/logx"
 )
@@ -37,8 +37,8 @@ func (l *CreateAdminLogic) CreateAdmin(in *pb.CreateAdminReq) (*pb.CreateAdminRe
 		Phone:       in.Phone,
 		Wechat:      in.Wechat,
 		AvatarUrl:   in.AvatarUrl,
-		UpdateAt:    time.Time{},
-		CreateAt:    time.Time{},
+		UpdateAt:    time.Now(),
+		CreateAt:    time.Now(),
 	})
 
 	if err != nil {
