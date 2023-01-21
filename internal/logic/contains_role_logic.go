@@ -51,14 +51,12 @@ func (l *ContainsRoleLogic) ContainsRole(in *pb.ContainsRoleReq) (resp *pb.Conta
 				resp.Contains = true
 				return
 			}
-			break
 		case constant.RoleCommunityAdmin:
 			if in.Role.Type == constant.RoleCommunityAdmin &&
 				(in.Role.CommunityId == "" || l.subCommunityOf(in.Role.CommunityId, role.CommunityId)) {
 				resp.Contains = true
 				return
 			}
-			break
 		default:
 			if in.Role.Type == role.Type {
 				resp.Contains = true
