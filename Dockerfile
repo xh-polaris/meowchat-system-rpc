@@ -15,7 +15,7 @@ ADD go.sum .
 RUN go mod download
 COPY . .
 COPY ./etc /app/etc
-RUN go build -ldflags="-s -w" -o /app/notice-rpc .
+RUN go build -ldflags="-s -w" -o /app/system-rpc .
 
 
 FROM scratch
@@ -25,7 +25,7 @@ COPY --from=builder /usr/share/zoneinfo/Asia/Shanghai /usr/share/zoneinfo/Asia/S
 ENV TZ Asia/Shanghai
 
 WORKDIR /app
-COPY --from=builder /app/notice-rpc /app/notice-rpc
+COPY --from=builder /app/system-rpc /app/system-rpc
 COPY --from=builder /app/etc /app/etc
 
-CMD ["./notice-rpc", "-f", "etc/notice.yaml"]
+CMD ["./system-rpc", "-f", "etc/system.yaml"]
