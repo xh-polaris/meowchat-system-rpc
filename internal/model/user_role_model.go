@@ -32,7 +32,7 @@ func (m CustomUserRoleModel) Upsert(ctx context.Context, data *UserRole) (*mongo
 	key := prefixUserRoleCacheKey + data.ID.Hex()
 	res, err := m.conn.UpdateOne(ctx, key,
 		bson.M{"_id": data.ID},
-		bson.M{"$set": data, "$setOnInsert": bson.M{"create_at": time.Now()}},
+		bson.M{"$set": data, "$setOnInsert": bson.M{"createAt": time.Now()}},
 		&options.UpdateOptions{
 			Upsert: &[]bool{true}[0],
 		})
