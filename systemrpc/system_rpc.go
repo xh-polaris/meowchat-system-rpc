@@ -19,6 +19,8 @@ type (
 	ContainsRoleResp      = pb.ContainsRoleResp
 	CreateAdminReq        = pb.CreateAdminReq
 	CreateAdminResp       = pb.CreateAdminResp
+	CreateApplyReq        = pb.CreateApplyReq
+	CreateApplyResp       = pb.CreateApplyResp
 	CreateCommunityReq    = pb.CreateCommunityReq
 	CreateCommunityResp   = pb.CreateCommunityResp
 	CreateNewsReq         = pb.CreateNewsReq
@@ -33,6 +35,8 @@ type (
 	DeleteNewsResp        = pb.DeleteNewsResp
 	DeleteNoticeReq       = pb.DeleteNoticeReq
 	DeleteNoticeResp      = pb.DeleteNoticeResp
+	HandleApplyReq        = pb.HandleApplyReq
+	HandleApplyResp       = pb.HandleApplyResp
 	ListAdminReq          = pb.ListAdminReq
 	ListAdminResp         = pb.ListAdminResp
 	ListCommunityReq      = pb.ListCommunityReq
@@ -81,11 +85,14 @@ type (
 		CreateAdmin(ctx context.Context, in *CreateAdminReq, opts ...grpc.CallOption) (*CreateAdminResp, error)
 		UpdateAdmin(ctx context.Context, in *UpdateAdminReq, opts ...grpc.CallOption) (*UpdateAdminResp, error)
 		DeleteAdmin(ctx context.Context, in *DeleteAdminReq, opts ...grpc.CallOption) (*DeleteAdminResp, error)
+		HandleApply(ctx context.Context, in *HandleApplyReq, opts ...grpc.CallOption) (*HandleApplyResp, error)
 		// 获取用户的所有角色
 		RetrieveUserRole(ctx context.Context, in *RetrieveUserRoleReq, opts ...grpc.CallOption) (*RetrieveUserRoleResp, error)
 		// 更新用户的角色
 		UpdateUserRole(ctx context.Context, in *UpdateUserRoleReq, opts ...grpc.CallOption) (*UpdateUserRoleResp, error)
 		ContainsRole(ctx context.Context, in *ContainsRoleReq, opts ...grpc.CallOption) (*ContainsRoleResp, error)
+		// 申请成为管理员
+		CreateApply(ctx context.Context, in *CreateApplyReq, opts ...grpc.CallOption) (*CreateApplyResp, error)
 		RetrieveCommunity(ctx context.Context, in *RetrieveCommunityReq, opts ...grpc.CallOption) (*RetrieveCommunityResp, error)
 		ListCommunity(ctx context.Context, in *ListCommunityReq, opts ...grpc.CallOption) (*ListCommunityResp, error)
 		CreateCommunity(ctx context.Context, in *CreateCommunityReq, opts ...grpc.CallOption) (*CreateCommunityResp, error)
@@ -179,6 +186,11 @@ func (m *defaultSystemRpc) DeleteAdmin(ctx context.Context, in *DeleteAdminReq, 
 	return client.DeleteAdmin(ctx, in, opts...)
 }
 
+func (m *defaultSystemRpc) HandleApply(ctx context.Context, in *HandleApplyReq, opts ...grpc.CallOption) (*HandleApplyResp, error) {
+	client := pb.NewSystemRpcClient(m.cli.Conn())
+	return client.HandleApply(ctx, in, opts...)
+}
+
 // 获取用户的所有角色
 func (m *defaultSystemRpc) RetrieveUserRole(ctx context.Context, in *RetrieveUserRoleReq, opts ...grpc.CallOption) (*RetrieveUserRoleResp, error) {
 	client := pb.NewSystemRpcClient(m.cli.Conn())
@@ -194,6 +206,12 @@ func (m *defaultSystemRpc) UpdateUserRole(ctx context.Context, in *UpdateUserRol
 func (m *defaultSystemRpc) ContainsRole(ctx context.Context, in *ContainsRoleReq, opts ...grpc.CallOption) (*ContainsRoleResp, error) {
 	client := pb.NewSystemRpcClient(m.cli.Conn())
 	return client.ContainsRole(ctx, in, opts...)
+}
+
+// 申请成为管理员
+func (m *defaultSystemRpc) CreateApply(ctx context.Context, in *CreateApplyReq, opts ...grpc.CallOption) (*CreateApplyResp, error) {
+	client := pb.NewSystemRpcClient(m.cli.Conn())
+	return client.CreateApply(ctx, in, opts...)
 }
 
 func (m *defaultSystemRpc) RetrieveCommunity(ctx context.Context, in *RetrieveCommunityReq, opts ...grpc.CallOption) (*RetrieveCommunityResp, error) {

@@ -13,6 +13,7 @@ type ServiceContext struct {
 	model.NoticeModel
 	model.CommunityModel
 	model.UserRoleModel
+	model.ApplyModel
 	*redis.Redis
 }
 
