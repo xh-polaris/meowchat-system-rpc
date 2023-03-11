@@ -2,8 +2,7 @@ package logic
 
 import (
 	"context"
-	"github.com/xh-polaris/meowchat-system-rpc/errorx"
-
+	"github.com/xh-polaris/meowchat-system-rpc/common/errorx"
 	"github.com/xh-polaris/meowchat-system-rpc/internal/svc"
 	"github.com/xh-polaris/meowchat-system-rpc/pb"
 
