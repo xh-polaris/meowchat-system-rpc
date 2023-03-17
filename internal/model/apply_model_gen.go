@@ -3,6 +3,7 @@ package model
 
 import (
 	"context"
+
 	"time"
 
 	"github.com/zeromicro/go-zero/core/stores/mon"
@@ -40,7 +41,7 @@ func (m *defaultApplyModel) Insert(ctx context.Context, data *Apply) error {
 func (m *defaultApplyModel) FindOne(ctx context.Context, id string) (*Apply, error) {
 	oid, err := primitive.ObjectIDFromHex(id)
 	if err != nil {
-		return nil, ErrInvalidObjectId
+		return nil, ErrNotFound
 	}
 
 	var data Apply
@@ -50,7 +51,7 @@ func (m *defaultApplyModel) FindOne(ctx context.Context, id string) (*Apply, err
 	case nil:
 		return &data, nil
 	case mon.ErrNotFound:
-		return nil, ErrNotFound
+		return nil, err
 	default:
 		return nil, err
 	}

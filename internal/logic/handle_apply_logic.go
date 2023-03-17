@@ -27,35 +27,38 @@ func NewHandleApplyLogic(ctx context.Context, svcCtx *svc.ServiceContext) *Handl
 }
 
 func (l *HandleApplyLogic) HandleApply(in *pb.HandleApplyReq) (*pb.HandleApplyResp, error) {
-	if in.Flag {
-		id, err := primitive.ObjectIDFromHex(in.UserId)
+	if in.IsRejected {
+		id, err := primitive.ObjectIDFromHex(in.ApplyId)
 		if err != nil {
 			return nil, errorx.ErrInvalidObjectId
 		}
-		roles, err := l.svcCtx.UserRoleModel.FindOne(l.ctx, in.UserId)
-		communityId := roles.Roles[0].CommunityId
+		roles, err := l.svcCtx.UserRoleModel.FindOne(l.ctx, in.ApplyId)
+		if err != nil {
+			return nil, err
+		}
+		apply, err := l.svcCtx.ApplyModel.FindOne(l.ctx, in.ApplyId)
 		if err != nil {
 			return nil, err
 		}
 		roles.Roles = append(roles.Roles, model.Role{
 			Type:        constant.RoleNormalCommunityAdmin,
-			CommunityId: communityId,
+			CommunityId: apply.CommunityId,
 		})
 		_, err = l.svcCtx.UserRoleModel.Upsert(l.ctx, &model.UserRole{
 			ID:    id,
 			Roles: roles.Roles,
 		})
 		_, err = l.svcCtx.ApplyModel.Update(l.ctx, &model.Apply{
-			Status:  2,
-			Handler: in.MyId,
+			IsRejected: 2,
+			Handler:    in.MyId,
 		})
 		if err != nil {
 			return nil, err
 		}
 	} else {
 		_, err := l.svcCtx.ApplyModel.Update(l.ctx, &model.Apply{
-			Status:  3,
-			Handler: in.MyId,
+			IsRejected: 3,
+			Handler:    in.MyId,
 		})
 		if err != nil {
 			return nil, err

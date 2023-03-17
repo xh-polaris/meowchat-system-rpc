@@ -194,9 +194,9 @@ message DeleteAdminResp {
 }
 message HandleApplyReq{
   string myId=1;
-  string userId = 2;
-  //flag为true时同意请求，否则不同意
-  bool flag=3;
+  string applyId = 2;
+  //isRejected为true时同意请求，否则不同意
+  bool isRejected=3;
 }
 message HandleApplyResp{
 
@@ -230,6 +230,7 @@ message UpdateUserRoleResp {
 }
 message CreateApplyReq{
   string userId = 1;
+  string communityId=2;
 }
 message CreateApplyResp{
 

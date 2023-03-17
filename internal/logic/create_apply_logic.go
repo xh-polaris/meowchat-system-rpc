@@ -27,9 +27,10 @@ func NewCreateApplyLogic(ctx context.Context, svcCtx *svc.ServiceContext) *Creat
 // 申请成为管理员
 func (l *CreateApplyLogic) CreateApply(in *pb.CreateApplyReq) (*pb.CreateApplyResp, error) {
 	if err := l.svcCtx.ApplyModel.Insert(l.ctx, &model.Apply{
-		UserId:  in.UserId,
-		Status:  constant.UnProcessed,
-		Handler: "",
+		UserId:      in.UserId,
+		CommunityId: in.CommunityId,
+		IsRejected:  constant.UnProcessed,
+		Handler:     "",
 	}); err != nil {
 		return nil, err
 	}
