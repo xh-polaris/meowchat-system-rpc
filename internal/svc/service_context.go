@@ -13,6 +13,7 @@ type ServiceContext struct {
 	model.NoticeModel
 	model.CommunityModel
 	model.UserRoleModel
+	model.ApplyModel
 	*redis.Redis
 }
 
@@ -24,6 +25,7 @@ func NewServiceContext(c config.Config) *ServiceContext {
 		NoticeModel:    model.NewNoticeModel(c.Mongo.URL, c.Mongo.DB, model.NoticeCollectionName, c.CacheConf),
 		CommunityModel: model.NewCommunityModel(c.Mongo.URL, c.Mongo.DB, model.CommunityCollectionName, c.CacheConf),
 		UserRoleModel:  model.NewUserRoleModel(c.Mongo.URL, c.Mongo.DB, model.UserRoleCollectionName, c.CacheConf),
+		ApplyModel:     model.NewApplyModel(c.Mongo.URL, c.Mongo.DB, model.ApplyCollectionName),
 		Redis:          c.Redis.NewRedis(),
 	}
 }

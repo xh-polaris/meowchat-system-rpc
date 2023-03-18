@@ -192,7 +192,22 @@ message DeleteAdminReq {
 message DeleteAdminResp {
 
 }
+message HandleApplyReq{
+  string myId=1;
+  string applyId = 2;
+  //isRejected为true时同意请求，否则不同意
+  bool isRejected=3;
+}
+message HandleApplyResp{
 
+}
+//获得全部申请列表
+message ListApplyReq{
+
+}
+message ListApplyResp{
+  repeated string applyId=1;
+}
 // ////////////////////////
 // /       用户角色        /
 // ////////////////////////
@@ -213,14 +228,20 @@ message RetrieveUserRoleResp {
 
 message UpdateUserRoleReq {
   string userId = 1;
-  // roles为用户增加/删除角色后所拥有的所有的角色
+  // roles为用户增加/删除权限后所拥有的所有的权限
   repeated Role roles = 2;
 }
 
 message UpdateUserRoleResp {
 
 }
+message CreateApplyReq{
+  string userId = 1;
+  string communityId=2;
+}
+message CreateApplyResp{
 
+}
 /*
 如果role只传入type，只会校验用户是否包含该角色，
 如果传入communityId并且type是communityAdmin，会同时校验communityId
@@ -317,7 +338,8 @@ service system_rpc {
   rpc CreateAdmin(CreateAdminReq) returns (CreateAdminResp);
   rpc UpdateAdmin(UpdateAdminReq) returns (UpdateAdminResp);
   rpc DeleteAdmin(DeleteAdminReq) returns (DeleteAdminResp);
-
+  rpc HandleApply(HandleApplyReq) returns (HandleApplyResp);
+  rpc ListApply(ListApplyReq) returns (ListApplyResp);
   // 用户角色
 
   // 获取用户的所有角色
@@ -325,7 +347,8 @@ service system_rpc {
   // 更新用户的角色
   rpc UpdateUserRole(UpdateUserRoleReq) returns (UpdateUserRoleResp);
   rpc ContainsRole(ContainsRoleReq) returns (ContainsRoleResp);
-
+  //申请成为管理员
+  rpc CreateApply(CreateApplyReq) returns (CreateApplyResp);
   // 社区
 
   rpc RetrieveCommunity(RetrieveCommunityReq) returns (RetrieveCommunityResp);
