@@ -201,6 +201,13 @@ message HandleApplyReq{
 message HandleApplyResp{
 
 }
+//获得全部申请列表
+message ListApplyReq{
+
+}
+message ListApplyResp{
+  repeated string applyId=1;
+}
 // ////////////////////////
 // /       用户角色        /
 // ////////////////////////
@@ -332,6 +339,7 @@ service system_rpc {
   rpc UpdateAdmin(UpdateAdminReq) returns (UpdateAdminResp);
   rpc DeleteAdmin(DeleteAdminReq) returns (DeleteAdminResp);
   rpc HandleApply(HandleApplyReq) returns (HandleApplyResp);
+  rpc ListApply(ListApplyReq) returns (ListApplyResp);
   // 用户角色
 
   // 获取用户的所有角色

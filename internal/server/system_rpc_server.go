@@ -102,6 +102,11 @@ func (s *SystemRpcServer) HandleApply(ctx context.Context, in *pb.HandleApplyReq
 	return l.HandleApply(in)
 }
 
+func (s *SystemRpcServer) ListApply(ctx context.Context, in *pb.ListApplyReq) (*pb.ListApplyResp, error) {
+	l := logic.NewListApplyLogic(ctx, s.svcCtx)
+	return l.ListApply(in)
+}
+
 // 获取用户的所有角色
 func (s *SystemRpcServer) RetrieveUserRole(ctx context.Context, in *pb.RetrieveUserRoleReq) (*pb.RetrieveUserRoleResp, error) {
 	l := logic.NewRetrieveUserRoleLogic(ctx, s.svcCtx)

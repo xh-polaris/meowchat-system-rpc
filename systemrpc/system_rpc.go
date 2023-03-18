@@ -39,6 +39,8 @@ type (
 	HandleApplyResp       = pb.HandleApplyResp
 	ListAdminReq          = pb.ListAdminReq
 	ListAdminResp         = pb.ListAdminResp
+	ListApplyReq          = pb.ListApplyReq
+	ListApplyResp         = pb.ListApplyResp
 	ListCommunityReq      = pb.ListCommunityReq
 	ListCommunityResp     = pb.ListCommunityResp
 	ListNewsReq           = pb.ListNewsReq
@@ -86,6 +88,7 @@ type (
 		UpdateAdmin(ctx context.Context, in *UpdateAdminReq, opts ...grpc.CallOption) (*UpdateAdminResp, error)
 		DeleteAdmin(ctx context.Context, in *DeleteAdminReq, opts ...grpc.CallOption) (*DeleteAdminResp, error)
 		HandleApply(ctx context.Context, in *HandleApplyReq, opts ...grpc.CallOption) (*HandleApplyResp, error)
+		ListApply(ctx context.Context, in *ListApplyReq, opts ...grpc.CallOption) (*ListApplyResp, error)
 		// 获取用户的所有角色
 		RetrieveUserRole(ctx context.Context, in *RetrieveUserRoleReq, opts ...grpc.CallOption) (*RetrieveUserRoleResp, error)
 		// 更新用户的角色
@@ -189,6 +192,11 @@ func (m *defaultSystemRpc) DeleteAdmin(ctx context.Context, in *DeleteAdminReq, 
 func (m *defaultSystemRpc) HandleApply(ctx context.Context, in *HandleApplyReq, opts ...grpc.CallOption) (*HandleApplyResp, error) {
 	client := pb.NewSystemRpcClient(m.cli.Conn())
 	return client.HandleApply(ctx, in, opts...)
+}
+
+func (m *defaultSystemRpc) ListApply(ctx context.Context, in *ListApplyReq, opts ...grpc.CallOption) (*ListApplyResp, error) {
+	client := pb.NewSystemRpcClient(m.cli.Conn())
+	return client.ListApply(ctx, in, opts...)
 }
 
 // 获取用户的所有角色
