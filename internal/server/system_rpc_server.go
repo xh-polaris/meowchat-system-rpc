@@ -97,6 +97,16 @@ func (s *SystemRpcServer) DeleteAdmin(ctx context.Context, in *pb.DeleteAdminReq
 	return l.DeleteAdmin(in)
 }
 
+func (s *SystemRpcServer) HandleApply(ctx context.Context, in *pb.HandleApplyReq) (*pb.HandleApplyResp, error) {
+	l := logic.NewHandleApplyLogic(ctx, s.svcCtx)
+	return l.HandleApply(in)
+}
+
+func (s *SystemRpcServer) ListApply(ctx context.Context, in *pb.ListApplyReq) (*pb.ListApplyResp, error) {
+	l := logic.NewListApplyLogic(ctx, s.svcCtx)
+	return l.ListApply(in)
+}
+
 // 获取用户的所有角色
 func (s *SystemRpcServer) RetrieveUserRole(ctx context.Context, in *pb.RetrieveUserRoleReq) (*pb.RetrieveUserRoleResp, error) {
 	l := logic.NewRetrieveUserRoleLogic(ctx, s.svcCtx)
@@ -112,6 +122,11 @@ func (s *SystemRpcServer) UpdateUserRole(ctx context.Context, in *pb.UpdateUserR
 func (s *SystemRpcServer) ContainsRole(ctx context.Context, in *pb.ContainsRoleReq) (*pb.ContainsRoleResp, error) {
 	l := logic.NewContainsRoleLogic(ctx, s.svcCtx)
 	return l.ContainsRole(in)
+}
+
+func (s *SystemRpcServer) CreateApply(ctx context.Context, in *pb.CreateApplyReq) (*pb.CreateApplyResp, error) {
+	l := logic.NewCreateApplyLogic(ctx, s.svcCtx)
+	return l.CreateApply(in)
 }
 
 func (s *SystemRpcServer) RetrieveCommunity(ctx context.Context, in *pb.RetrieveCommunityReq) (*pb.RetrieveCommunityResp, error) {

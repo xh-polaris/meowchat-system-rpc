@@ -1,15 +1,21 @@
-Name: notice.rpc
+Name: system.rpc
 ListenOn: 127.0.0.1:8080
-Mode: dev
+Mode: pro
 Log:
-  Encoding: plain
+  Encoding: json
+  Level: error
 Mongo:
-  URL: $MONGO_URL
-  DB: $MONGO_DB
+  URL: mongodb+srv://root:FhfzRPcLfF@mongodb-headless.mongodb.svc.cluster.local/?tls=false
+  DB: meowchat_system
 CacheConf:
-  -
-    Host: $CACHE_REDIS_HOST
-    Pass: $CACHE_REDIS_PASS
+  - Host: redis-cluster.redis:6379
+    Type: cluster
+    Pass: 3RvyP8tOib
 Redis:
-  Host: $REDIS_HOST
-  Pass: $REDIS_PASS
+  Host: redis-cluster.redis:6379
+  Type: cluster
+  Pass: 3RvyP8tOib
+Prometheus:
+  Host: 0.0.0.0
+Telemetry:
+  Endpoint: http://jaeger-collector.istio-system:14268/api/traces
