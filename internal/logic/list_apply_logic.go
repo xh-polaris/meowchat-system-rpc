@@ -33,9 +33,7 @@ func (l *ListApplyLogic) ListApply(in *pb.ListApplyReq) (*pb.ListApplyResp, erro
 		apply = append(apply, &pb.Apply{
 			ApplyId:     x.ID.Hex(),
 			ApplicantId: x.ApplicantId,
-			HandlerId:   x.HandlerId,
 			CommunityId: x.CommunityId,
-			Status:      x.Status,
 		})
 	}
 	return &pb.ListApplyResp{Apply: apply}, nil

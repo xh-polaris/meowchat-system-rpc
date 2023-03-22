@@ -140,10 +140,7 @@ message Admin {
 message Apply{
   string applyId=1;
   string applicantId=2;
-  string handlerId=3;
   string communityId=4;
-  //123分别代表 未处理，通过，拒绝
-  int64 status=5;
 }
 message RetrieveAdminReq {
   string id = 1;
@@ -154,7 +151,6 @@ message RetrieveAdminResp {
 }
 message HandleApplyReq{
   string applyId=1;
-  string handlerId=2;
   bool isRejected=3;
 }
 message HandleApplyResp{

@@ -26,24 +26,8 @@ func NewHandleApplyLogic(ctx context.Context, svcCtx *svc.ServiceContext) *Handl
 
 func (l *HandleApplyLogic) HandleApply(in *pb.HandleApplyReq) (*pb.HandleApplyResp, error) {
 
-	apply, err := l.svcCtx.ApplyModel.FindOne(l.ctx, in.ApplyId)
-	if err != nil {
-		return nil, err
-	}
-	if in.IsRejected == true {
-		apply.Status = constant.ApplyRejected
-		apply.HandlerId = in.HandlerId
-		_, err := l.svcCtx.ApplyModel.Update(l.ctx, apply)
-		if err != nil {
-			return nil, err
-		}
-	} else {
-		apply.Status = constant.ApplyAccepted
-		apply.HandlerId = in.HandlerId
-		_, err := l.svcCtx.ApplyModel.Update(l.ctx, apply)
-		if err != nil {
-			return nil, err
-		}
+	if in.IsRejected == false {
+		apply, err := l.svcCtx.ApplyModel.FindOne(l.ctx, in.ApplyId)
 		userRole, err := l.svcCtx.UserRoleModel.FindOne(l.ctx, apply.ApplicantId)
 		if err != nil {
 			return nil, err
@@ -52,11 +36,10 @@ func (l *HandleApplyLogic) HandleApply(in *pb.HandleApplyReq) (*pb.HandleApplyRe
 			Type:        constant.RoleCommunityAdmin,
 			CommunityId: apply.CommunityId,
 		})
-		_, err = l.svcCtx.UserRoleModel.Update(l.ctx, userRole)
-		if err != nil {
-			return nil, err
-		}
 	}
-
+	_, err := l.svcCtx.ApplyModel.Delete(l.ctx, in.ApplyId)
+	if err != nil {
+		return nil, err
+	}
 	return &pb.HandleApplyResp{}, nil
 }
