@@ -25,3 +25,5 @@ ENV TZ Asia/Shanghai
 
 WORKDIR /app
 COPY --from=builder /app/system-rpc /app/system-rpc
+
+CMD ["./system-rpc", "-f", "etc/system.yaml"]
