@@ -2,7 +2,7 @@ package logic
 
 import (
 	"context"
-	"github.com/xh-polaris/meowchat-system-rpc/constant"
+	"github.com/xh-polaris/meowchat-system-rpc/common/constant"
 	"github.com/xh-polaris/meowchat-system-rpc/internal/svc"
 	"github.com/xh-polaris/meowchat-system-rpc/pb"
 
