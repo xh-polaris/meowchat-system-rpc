@@ -2,7 +2,7 @@ package svc
 
 import (
 	"context"
-	"github.com/xh-polaris/meowchat-system-rpc/errorx"
+	"github.com/xh-polaris/meowchat-system-rpc/common/errorx"
 	"github.com/xh-polaris/meowchat-system-rpc/internal/model"
 	"github.com/xh-polaris/meowchat-system-rpc/pb"
 	"go.mongodb.org/mongo-driver/bson/primitive"
