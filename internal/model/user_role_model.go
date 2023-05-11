@@ -64,6 +64,7 @@ func (m CustomUserRoleModel) FindMany(ctx context.Context, role string, communit
 		}
 		return resp, nil
 	}
+
 }
 
 // NewUserRoleModel returns a model for the mongo.
