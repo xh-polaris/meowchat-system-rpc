@@ -1,0 +1,39 @@
+Name: system.rpc-test
+
+ListenOn: 0.0.0.0:8080
+
+Mode: test
+
+Log:
+
+  Encoding: plain
+
+  Level: debug
+
+Mongo:
+
+  URL: mongodb+srv://root:FhfzRPcLfF@mongodb-headless.mongodb.svc.cluster.local/?tls=false
+
+  DB: meowchat_system_test
+
+CacheConf:
+
+  -
+
+    Host: redis-master.redis:6379
+
+Redis:
+
+  Host: redis-cluster.redis:6379
+
+  Type: cluster
+
+  Pass: 3RvyP8tOib
+
+Prometheus:
+
+  Host: 0.0.0.0
+
+Telemetry:
+
+  Endpoint: http://jaeger-collector.istio-system:14268/api/traces
