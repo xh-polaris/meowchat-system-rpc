@@ -34,9 +34,12 @@ const (
 	SystemRpc_CreateAdmin_FullMethodName       = "/system.system_rpc/CreateAdmin"
 	SystemRpc_UpdateAdmin_FullMethodName       = "/system.system_rpc/UpdateAdmin"
 	SystemRpc_DeleteAdmin_FullMethodName       = "/system.system_rpc/DeleteAdmin"
+	SystemRpc_HandleApply_FullMethodName       = "/system.system_rpc/HandleApply"
+	SystemRpc_ListApply_FullMethodName         = "/system.system_rpc/ListApply"
 	SystemRpc_RetrieveUserRole_FullMethodName  = "/system.system_rpc/RetrieveUserRole"
 	SystemRpc_UpdateUserRole_FullMethodName    = "/system.system_rpc/UpdateUserRole"
 	SystemRpc_ContainsRole_FullMethodName      = "/system.system_rpc/ContainsRole"
+	SystemRpc_CreateApply_FullMethodName       = "/system.system_rpc/CreateApply"
 	SystemRpc_RetrieveCommunity_FullMethodName = "/system.system_rpc/RetrieveCommunity"
 	SystemRpc_ListCommunity_FullMethodName     = "/system.system_rpc/ListCommunity"
 	SystemRpc_CreateCommunity_FullMethodName   = "/system.system_rpc/CreateCommunity"
@@ -64,11 +67,14 @@ type SystemRpcClient interface {
 	CreateAdmin(ctx context.Context, in *CreateAdminReq, opts ...grpc.CallOption) (*CreateAdminResp, error)
 	UpdateAdmin(ctx context.Context, in *UpdateAdminReq, opts ...grpc.CallOption) (*UpdateAdminResp, error)
 	DeleteAdmin(ctx context.Context, in *DeleteAdminReq, opts ...grpc.CallOption) (*DeleteAdminResp, error)
+	HandleApply(ctx context.Context, in *HandleApplyReq, opts ...grpc.CallOption) (*HandleApplyResp, error)
+	ListApply(ctx context.Context, in *ListApplyReq, opts ...grpc.CallOption) (*ListApplyResp, error)
 	// 获取用户的所有角色
 	RetrieveUserRole(ctx context.Context, in *RetrieveUserRoleReq, opts ...grpc.CallOption) (*RetrieveUserRoleResp, error)
 	// 更新用户的角色
 	UpdateUserRole(ctx context.Context, in *UpdateUserRoleReq, opts ...grpc.CallOption) (*UpdateUserRoleResp, error)
 	ContainsRole(ctx context.Context, in *ContainsRoleReq, opts ...grpc.CallOption) (*ContainsRoleResp, error)
+	CreateApply(ctx context.Context, in *CreateApplyReq, opts ...grpc.CallOption) (*CreateApplyResp, error)
 	RetrieveCommunity(ctx context.Context, in *RetrieveCommunityReq, opts ...grpc.CallOption) (*RetrieveCommunityResp, error)
 	ListCommunity(ctx context.Context, in *ListCommunityReq, opts ...grpc.CallOption) (*ListCommunityResp, error)
 	CreateCommunity(ctx context.Context, in *CreateCommunityReq, opts ...grpc.CallOption) (*CreateCommunityResp, error)
@@ -220,6 +226,24 @@ func (c *systemRpcClient) DeleteAdmin(ctx context.Context, in *DeleteAdminReq, o
 	return out, nil
 }
 
+func (c *systemRpcClient) HandleApply(ctx context.Context, in *HandleApplyReq, opts ...grpc.CallOption) (*HandleApplyResp, error) {
+	out := new(HandleApplyResp)
+	err := c.cc.Invoke(ctx, SystemRpc_HandleApply_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *systemRpcClient) ListApply(ctx context.Context, in *ListApplyReq, opts ...grpc.CallOption) (*ListApplyResp, error) {
+	out := new(ListApplyResp)
+	err := c.cc.Invoke(ctx, SystemRpc_ListApply_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 func (c *systemRpcClient) RetrieveUserRole(ctx context.Context, in *RetrieveUserRoleReq, opts ...grpc.CallOption) (*RetrieveUserRoleResp, error) {
 	out := new(RetrieveUserRoleResp)
 	err := c.cc.Invoke(ctx, SystemRpc_RetrieveUserRole_FullMethodName, in, out, opts...)
@@ -241,6 +265,15 @@ func (c *systemRpcClient) UpdateUserRole(ctx context.Context, in *UpdateUserRole
 func (c *systemRpcClient) ContainsRole(ctx context.Context, in *ContainsRoleReq, opts ...grpc.CallOption) (*ContainsRoleResp, error) {
 	out := new(ContainsRoleResp)
 	err := c.cc.Invoke(ctx, SystemRpc_ContainsRole_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *systemRpcClient) CreateApply(ctx context.Context, in *CreateApplyReq, opts ...grpc.CallOption) (*CreateApplyResp, error) {
+	out := new(CreateApplyResp)
+	err := c.cc.Invoke(ctx, SystemRpc_CreateApply_FullMethodName, in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -320,11 +353,14 @@ type SystemRpcServer interface {
 	CreateAdmin(context.Context, *CreateAdminReq) (*CreateAdminResp, error)
 	UpdateAdmin(context.Context, *UpdateAdminReq) (*UpdateAdminResp, error)
 	DeleteAdmin(context.Context, *DeleteAdminReq) (*DeleteAdminResp, error)
+	HandleApply(context.Context, *HandleApplyReq) (*HandleApplyResp, error)
+	ListApply(context.Context, *ListApplyReq) (*ListApplyResp, error)
 	// 获取用户的所有角色
 	RetrieveUserRole(context.Context, *RetrieveUserRoleReq) (*RetrieveUserRoleResp, error)
 	// 更新用户的角色
 	UpdateUserRole(context.Context, *UpdateUserRoleReq) (*UpdateUserRoleResp, error)
 	ContainsRole(context.Context, *ContainsRoleReq) (*ContainsRoleResp, error)
+	CreateApply(context.Context, *CreateApplyReq) (*CreateApplyResp, error)
 	RetrieveCommunity(context.Context, *RetrieveCommunityReq) (*RetrieveCommunityResp, error)
 	ListCommunity(context.Context, *ListCommunityReq) (*ListCommunityResp, error)
 	CreateCommunity(context.Context, *CreateCommunityReq) (*CreateCommunityResp, error)
@@ -383,6 +419,12 @@ func (UnimplementedSystemRpcServer) UpdateAdmin(context.Context, *UpdateAdminReq
 func (UnimplementedSystemRpcServer) DeleteAdmin(context.Context, *DeleteAdminReq) (*DeleteAdminResp, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method DeleteAdmin not implemented")
 }
+func (UnimplementedSystemRpcServer) HandleApply(context.Context, *HandleApplyReq) (*HandleApplyResp, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method HandleApply not implemented")
+}
+func (UnimplementedSystemRpcServer) ListApply(context.Context, *ListApplyReq) (*ListApplyResp, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ListApply not implemented")
+}
 func (UnimplementedSystemRpcServer) RetrieveUserRole(context.Context, *RetrieveUserRoleReq) (*RetrieveUserRoleResp, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method RetrieveUserRole not implemented")
 }
@@ -391,6 +433,9 @@ func (UnimplementedSystemRpcServer) UpdateUserRole(context.Context, *UpdateUserR
 }
 func (UnimplementedSystemRpcServer) ContainsRole(context.Context, *ContainsRoleReq) (*ContainsRoleResp, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ContainsRole not implemented")
+}
+func (UnimplementedSystemRpcServer) CreateApply(context.Context, *CreateApplyReq) (*CreateApplyResp, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method CreateApply not implemented")
 }
 func (UnimplementedSystemRpcServer) RetrieveCommunity(context.Context, *RetrieveCommunityReq) (*RetrieveCommunityResp, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method RetrieveCommunity not implemented")
@@ -693,6 +738,42 @@ func _SystemRpc_DeleteAdmin_Handler(srv interface{}, ctx context.Context, dec fu
 	return interceptor(ctx, in, info, handler)
 }
 
+func _SystemRpc_HandleApply_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(HandleApplyReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(SystemRpcServer).HandleApply(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: SystemRpc_HandleApply_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(SystemRpcServer).HandleApply(ctx, req.(*HandleApplyReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _SystemRpc_ListApply_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ListApplyReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(SystemRpcServer).ListApply(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: SystemRpc_ListApply_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(SystemRpcServer).ListApply(ctx, req.(*ListApplyReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 func _SystemRpc_RetrieveUserRole_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(RetrieveUserRoleReq)
 	if err := dec(in); err != nil {
@@ -743,6 +824,24 @@ func _SystemRpc_ContainsRole_Handler(srv interface{}, ctx context.Context, dec f
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(SystemRpcServer).ContainsRole(ctx, req.(*ContainsRoleReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _SystemRpc_CreateApply_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(CreateApplyReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(SystemRpcServer).CreateApply(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: SystemRpc_CreateApply_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(SystemRpcServer).CreateApply(ctx, req.(*CreateApplyReq))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -923,6 +1022,14 @@ var SystemRpc_ServiceDesc = grpc.ServiceDesc{
 			Handler:    _SystemRpc_DeleteAdmin_Handler,
 		},
 		{
+			MethodName: "HandleApply",
+			Handler:    _SystemRpc_HandleApply_Handler,
+		},
+		{
+			MethodName: "ListApply",
+			Handler:    _SystemRpc_ListApply_Handler,
+		},
+		{
 			MethodName: "RetrieveUserRole",
 			Handler:    _SystemRpc_RetrieveUserRole_Handler,
 		},
@@ -933,6 +1040,10 @@ var SystemRpc_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "ContainsRole",
 			Handler:    _SystemRpc_ContainsRole_Handler,
+		},
+		{
+			MethodName: "CreateApply",
+			Handler:    _SystemRpc_CreateApply_Handler,
 		},
 		{
 			MethodName: "RetrieveCommunity",

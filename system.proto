@@ -137,7 +137,11 @@ message Admin {
   string wechat = 6;
   string avatarUrl = 7;
 }
-
+message Apply{
+  string applyId=1;
+  string applicantId=2;
+  string communityId=4;
+}
 message RetrieveAdminReq {
   string id = 1;
 }
@@ -145,7 +149,19 @@ message RetrieveAdminReq {
 message RetrieveAdminResp {
   Admin admin = 1;
 }
+message HandleApplyReq{
+  string applyId=1;
+  bool isRejected=3;
+}
+message HandleApplyResp{
 
+}
+message ListApplyReq{
+  string communityId=1;
+}
+message ListApplyResp{
+  repeated Apply apply=1;
+}
 message ListAdminReq {
   string communityId = 1;
   int64 page = 2; // 分页的当前页，从1开始
@@ -210,7 +226,13 @@ message RetrieveUserRoleReq {
 message RetrieveUserRoleResp {
   repeated Role roles = 1;
 }
+message CreateApplyReq{
+  string applicantId=1;
+  string communityId=2;
+}
+message CreateApplyResp{
 
+}
 message UpdateUserRoleReq {
   string userId = 1;
   // roles为用户增加/删除角色后所拥有的所有的角色
@@ -327,7 +349,8 @@ service system_rpc {
   rpc CreateAdmin(CreateAdminReq) returns (CreateAdminResp);
   rpc UpdateAdmin(UpdateAdminReq) returns (UpdateAdminResp);
   rpc DeleteAdmin(DeleteAdminReq) returns (DeleteAdminResp);
-
+  rpc HandleApply(HandleApplyReq) returns (HandleApplyResp);
+  rpc ListApply(ListApplyReq) returns (ListApplyResp);
   // 用户角色
 
   // 获取用户的所有角色
@@ -335,7 +358,7 @@ service system_rpc {
   // 更新用户的角色
   rpc UpdateUserRole(UpdateUserRoleReq) returns (UpdateUserRoleResp);
   rpc ContainsRole(ContainsRoleReq) returns (ContainsRoleResp);
-
+  rpc CreateApply(CreateApplyReq) returns (CreateApplyResp);
   // 社区
 
   rpc RetrieveCommunity(RetrieveCommunityReq) returns (RetrieveCommunityResp);
