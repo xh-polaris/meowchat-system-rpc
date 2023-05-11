@@ -12,23 +12,23 @@ Log:
 
 Mongo:
 
-  URL: mongodb+srv://root:FhfzRPcLfF@mongodb-headless.mongodb.svc.cluster.local/?tls=false
+  URL:
 
-  DB: meowchat_system_test
+  DB:
 
 CacheConf:
 
   -
 
-    Host: redis-master.redis:6379
+    Host:
 
 Redis:
 
-  Host: redis-cluster.redis:6379
+  Host:
 
-  Type: cluster
+  Type:
 
-  Pass: 3RvyP8tOib
+  Pass:
 
 Prometheus:
 
@@ -36,4 +36,4 @@ Prometheus:
 
 Telemetry:
 
-  Endpoint: http://jaeger-collector.istio-system:14268/api/traces
+  Endpoint:
