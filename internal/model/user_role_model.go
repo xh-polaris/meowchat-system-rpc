@@ -2,6 +2,7 @@ package model
 
 import (
 	"context"
+	"github.com/xh-polaris/meowchat-system-rpc/common/constant"
 	"github.com/zeromicro/go-zero/core/stores/cache"
 	"github.com/zeromicro/go-zero/core/stores/monc"
 	"go.mongodb.org/mongo-driver/bson"
@@ -20,6 +21,7 @@ type (
 	UserRoleModel interface {
 		userRoleModel
 		Upsert(ctx context.Context, data *UserRole) (*mongo.UpdateResult, error)
+		FindMany(ctx context.Context, role string, communityId string) ([]*UserRole, error)
 	}
 
 	CustomUserRoleModel struct {
@@ -37,6 +39,32 @@ func (m CustomUserRoleModel) Upsert(ctx context.Context, data *UserRole) (*mongo
 			Upsert: &[]bool{true}[0],
 		})
 	return res, err
+}
+
+func (m CustomUserRoleModel) FindMany(ctx context.Context, role string, communityId string) ([]*UserRole, error) {
+	var resp []*UserRole
+
+	switch role {
+	case constant.RoleSuperAdmin:
+		err := m.conn.Find(ctx, &resp, bson.M{"roles.type": role})
+		if err != nil {
+			return nil, err
+		}
+		return resp, nil
+	case constant.RoleCommunityAdmin:
+		err := m.conn.Find(ctx, &resp, bson.M{"roles.type": role, "roles.communityId": communityId})
+		if err != nil {
+			return nil, err
+		}
+		return resp, nil
+	default:
+		err := m.conn.Find(ctx, &resp, bson.M{"roles.type": role, "roles.communityId": communityId})
+		if err != nil {
+			return nil, err
+		}
+		return resp, nil
+	}
+
 }
 
 // NewUserRoleModel returns a model for the mongo.

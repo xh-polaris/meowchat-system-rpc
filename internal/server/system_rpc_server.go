@@ -153,3 +153,8 @@ func (s *SystemRpcServer) DeleteCommunity(ctx context.Context, in *pb.DeleteComm
 	l := logic.NewDeleteCommunityLogic(ctx, s.svcCtx)
 	return l.DeleteCommunity(in)
 }
+
+func (s *SystemRpcServer) ListUseridByRole(ctx context.Context, in *pb.ListUseridReq) (*pb.ListUseridResp, error) {
+	l := logic.NewListUseridByRoleLogic(ctx, s.svcCtx)
+	return l.ListUseridByRole(in)
+}

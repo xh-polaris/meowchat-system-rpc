@@ -71,6 +71,8 @@ type (
 	UpdateNoticeResp      = pb.UpdateNoticeResp
 	UpdateUserRoleReq     = pb.UpdateUserRoleReq
 	UpdateUserRoleResp    = pb.UpdateUserRoleResp
+	ListUseridReq         = pb.ListUseridReq
+	ListUseridResp        = pb.ListUseridResp
 
 	SystemRpc interface {
 		RetrieveNotice(ctx context.Context, in *RetrieveNoticeReq, opts ...grpc.CallOption) (*RetrieveNoticeResp, error)
@@ -101,6 +103,7 @@ type (
 		CreateCommunity(ctx context.Context, in *CreateCommunityReq, opts ...grpc.CallOption) (*CreateCommunityResp, error)
 		UpdateCommunity(ctx context.Context, in *UpdateCommunityReq, opts ...grpc.CallOption) (*UpdateCommunityResp, error)
 		DeleteCommunity(ctx context.Context, in *DeleteCommunityReq, opts ...grpc.CallOption) (*DeleteCommunityResp, error)
+		ListUseridByRole(ctx context.Context, in *ListUseridReq, opts ...grpc.CallOption) (*ListUseridResp, error)
 	}
 
 	defaultSystemRpc struct {
@@ -244,4 +247,9 @@ func (m *defaultSystemRpc) UpdateCommunity(ctx context.Context, in *UpdateCommun
 func (m *defaultSystemRpc) DeleteCommunity(ctx context.Context, in *DeleteCommunityReq, opts ...grpc.CallOption) (*DeleteCommunityResp, error) {
 	client := pb.NewSystemRpcClient(m.cli.Conn())
 	return client.DeleteCommunity(ctx, in, opts...)
+}
+
+func (m *defaultSystemRpc) ListUseridByRole(ctx context.Context, in *ListUseridReq, opts ...grpc.CallOption) (*ListUseridResp, error) {
+	client := pb.NewSystemRpcClient(m.cli.Conn())
+	return client.ListUseridByRole(ctx, in, opts...)
 }

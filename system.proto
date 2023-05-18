@@ -315,6 +315,16 @@ message DeleteCommunityResp {
 
 }
 
+message ListUseridReq {
+  string roleType = 1;
+  string communityId =2;
+  //如果为roleType为superAdmin则为空值
+}
+
+message ListUseridResp {
+  repeated string userId = 1;
+}
+
 service system_rpc {
   // 公告
 
@@ -357,4 +367,5 @@ service system_rpc {
   rpc UpdateCommunity(UpdateCommunityReq) returns (UpdateCommunityResp);
   rpc DeleteCommunity(DeleteCommunityReq) returns (DeleteCommunityResp);
 
+  rpc ListUseridByRole(ListUseridReq) returns (ListUseridResp);
 }
