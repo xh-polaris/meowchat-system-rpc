@@ -1,4 +1,4 @@
-name: Static Analysis
+name: Unit Test
 on:
   push:
     branches: [ "*" ]
@@ -20,7 +20,5 @@ jobs:
         uses: actions/setup-go@v4
         with:
           go-version: stable
-      - name: Lint
-        uses: golangci/golangci-lint-action@v3
-        with:
-          version: latest
+      - name: Unit test
+        run: go test -gcflags=all=-l -coverprofile=cover.out ./...

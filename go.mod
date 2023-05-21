@@ -5,9 +5,9 @@ go 1.18
 require (
 	github.com/bytedance/mockey v1.1.1
 	github.com/smartystreets/goconvey v1.6.4
-	github.com/zeromicro/go-zero v1.4.3
-	go.mongodb.org/mongo-driver v1.11.1
-	google.golang.org/grpc v1.53.0
+	github.com/zeromicro/go-zero v1.5.2
+	go.mongodb.org/mongo-driver v1.11.4
+	google.golang.org/grpc v1.54.0
 	google.golang.org/protobuf v1.30.0
 )
 
@@ -72,6 +72,7 @@ require (
 	go.opentelemetry.io/otel/exporters/otlp/internal/retry v1.14.0 // indirect
 	go.opentelemetry.io/otel/exporters/otlp/otlptrace v1.14.0 // indirect
 	go.opentelemetry.io/otel/exporters/otlp/otlptrace/otlptracegrpc v1.14.0 // indirect
+	go.opentelemetry.io/otel/exporters/otlp/otlptrace/otlptracehttp v1.14.0 // indirect
 	go.opentelemetry.io/otel/exporters/zipkin v1.14.0 // indirect
 	go.opentelemetry.io/otel/sdk v1.14.0 // indirect
 	go.opentelemetry.io/otel/trace v1.14.0 // indirect
