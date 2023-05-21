@@ -28,6 +28,9 @@ func (l *HandleApplyLogic) HandleApply(in *pb.HandleApplyReq) (*pb.HandleApplyRe
 
 	if in.IsRejected == false {
 		apply, err := l.svcCtx.ApplyModel.FindOne(l.ctx, in.ApplyId)
+		if err != nil {
+			return nil, err
+		}
 		userRole, err := l.svcCtx.UserRoleModel.FindOne(l.ctx, apply.ApplicantId)
 		if err != nil {
 			return nil, err
