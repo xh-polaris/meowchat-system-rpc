@@ -13,5 +13,5 @@ type Config struct {
 		DB  string
 	}
 	CacheConf cache.CacheConf
-	Redis     redis.RedisConf
+	RedisConf redis.RedisConf
 }

@@ -12,6 +12,7 @@ type News struct {
 	ImageUrl    string             `bson:"imageUrl,omitempty" json:"imageUrl,omitempty"`
 	LinkUrl     string             `bson:"linkUrl,omitempty" json:"linkUrl,omitempty"`
 	Type        string             `bson:"type,omitempty" json:"type,omitempty"`
+	IsPublic    int64              `bson:"isPublic,omitempty" json:"isPublic,omitempty"`
 	UpdateAt    time.Time          `bson:"updateAt,omitempty" json:"updateAt,omitempty"`
 	CreateAt    time.Time          `bson:"createAt,omitempty" json:"createAt,omitempty"`
 }

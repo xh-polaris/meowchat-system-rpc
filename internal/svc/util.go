@@ -37,6 +37,7 @@ func ConvertNews(in *model.News) *pb.News {
 		ImageUrl:    in.ImageUrl,
 		LinkUrl:     in.LinkUrl,
 		Type:        in.Type,
+		IsPublic:    in.IsPublic,
 	}
 }
 

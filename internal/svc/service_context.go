@@ -26,6 +26,6 @@ func NewServiceContext(c config.Config) *ServiceContext {
 		CommunityModel: model.NewCommunityModel(c.Mongo.URL, c.Mongo.DB, model.CommunityCollectionName, c.CacheConf),
 		UserRoleModel:  model.NewUserRoleModel(c.Mongo.URL, c.Mongo.DB, model.UserRoleCollectionName, c.CacheConf),
 		ApplyModel:     model.NewApplyModel(c.Mongo.URL, c.Mongo.DB, model.ApplyCollectionName),
-		Redis:          c.Redis.NewRedis(),
+		Redis:          c.RedisConf.NewRedis(),
 	}
 }
