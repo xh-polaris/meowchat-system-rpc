@@ -72,6 +72,7 @@ message News {
   string imageUrl = 3;
   string linkUrl = 4;
   string type = 5;
+  int64  isPublic = 6;
 }
 
 message RetrieveNewsReq {
@@ -99,6 +100,7 @@ message CreateNewsReq {
   string imageUrl = 2;
   string linkUrl = 3;
   string type = 4;
+  int64 isPublic = 5;
 }
 
 message CreateNewsResp {
@@ -110,6 +112,7 @@ message UpdateNewsReq {
   string imageUrl = 2;
   string linkUrl = 3;
   string type = 4;
+  int64 isPublic =5 ;
 }
 
 message UpdateNewsResp {

@@ -33,7 +33,10 @@ func (m customNewsModel) ListNews(ctx context.Context, req *pb.ListNewsReq) ([]*
 	var resp []*News
 
 	filter := bson.M{
-		"communityId": req.CommunityId,
+		"$or": []bson.M{
+			{"communityId": req.CommunityId},
+			{"isPublic": 1},
+		},
 	}
 	findOptions := ToFindOptions(req.Page, req.Size, req.Sort)
 
@@ -66,6 +69,7 @@ func (m customNewsModel) UpdateNews(ctx context.Context, req *pb.UpdateNewsReq) 
 		"imageUrl": req.ImageUrl,
 		"linkUrl":  req.LinkUrl,
 		"updateAt": time.Now(),
+		"isPublic": req.IsPublic,
 	}
 
 	// 更新数据

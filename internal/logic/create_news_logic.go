@@ -33,6 +33,7 @@ func (l *CreateNewsLogic) CreateNews(in *pb.CreateNewsReq) (*pb.CreateNewsResp, 
 		ImageUrl:    in.ImageUrl,
 		LinkUrl:     in.LinkUrl,
 		Type:        in.Type,
+		IsPublic:    in.IsPublic,
 		CreateAt:    time.Now(),
 		UpdateAt:    time.Now(),
 	})
